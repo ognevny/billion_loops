@@ -1,0 +1,12 @@
+[workspace]
+members = [
+    "rust",
+    "rust-no-core",
+]
+resolver = "3"
+
+[profile.dev]
+debug = false
+overflow-checks = false
+panic = "abort"
+debug-assertions = false
