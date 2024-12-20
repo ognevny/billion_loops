@@ -1,35 +1,112 @@
 This is like a "book" about this "billion loops" implementation. First of all you should understand
-how iy works.
+how it works.
 
-First lines helps me to remove implicit dependency on std and core, enable internal features and
-arbitrary_self_types.
+#### Attributes block
 
-Then there is a huge `extern` blocks, which link to OS-specific "main" library (libc.so on Linux,
-for example). That's required to have a working _program_, otherwise there could be only a library
-with a single function
+```rust
+#![feature(no_core)]
+#![allow(non_camel_case_types)]
+#![allow(internal_features)]
+#![feature(lang_items)]
+#![feature(arbitrary_self_types)]
+#![no_core]
+```
 
-Main part (funniest thing) happens after `extern`s. There I _explicitly_ tell the compiler what I
-want to use in code. That's still require core library, but only needed things will be used.
-`lang_items` is perma-unstable feature that gives a "superpower" for defining things that are
-common for std and core. Also `printf` function is used from main library because there is no
-`print!` and others obviously
+These attributes enable 3 features: `no_core`[^1], `lang_items`[^2] and `arbitrary_self_types`[^3].
+The first one is enabled to allow `#![no_core]`, which removes implicit linking of core and std. The
+second one is enabled to allow manual specifying of each language items (without core there are not
+any). The third one allows manual implementing of PartialEq. Also 2 warnings are disabled.
 
-In this case there are 4 things needed:
+[^1]: https://doc.rust-lang.org/beta/unstable-book/language-features/no-core.html
 
-`Copy` and `Sized` is required because I work with integers, which are sized values and can be
-safely copied. `Copy` has explicit impl for i32 to make `Add` trait possible
+[^2]: https://doc.rust-lang.org/beta/unstable-book/language-features/lang-items.html
 
-`Add` is used for `n = n + 1` part for obvious reasons
+[^3]: https://doc.rust-lang.org/beta/unstable-book/language-features/arbitrary-self-types.html
 
-`PartialEq` is used because there is no easier way to stop loop rather than check
-`n != 1_000_000_000` condition.
+#### Exporting core libs
 
-In the end there is `fn main() {}` which is here because it must be here. Actual main function is
-`start`, because `lang_item = "start"` is put so compiler knows that program starts here. Function
-signature that's just what rustc wants to see for start function.
+```rust
+#[cfg(target_os = "linux")]
+#[link(name = "c")]
+unsafe extern {}
+#[cfg(target_os = "macos")]
+#[link(name = "System")]
+unsafe extern {}
+#[cfg(target_os = "windows")]
+#[link(name = "kernel32.dll")]
+unsafe extern {}
+```
+
+To run the program the start point is needed. These start points are defined in core libraries. For
+Linux it's `libc`, for Mac it's `System`, on Windows there are some dlls needed.
+
+#### c_char
+
+```rust
+#[cfg(target_os = "linux")]
+pub type c_char = i8;
+#[cfg(not(target_os = "linux"))]
+pub type c_char = u8;
+```
+
+Properly define c_char type for `printf` function depending on OS.
+
+#### Defining language items
+
+```rust
+#[lang = "sized"]
+pub trait Sized {}
+
+#[lang = "copy"]
+pub trait Copy {}
+impl Copy for i32 {}
+
+#[lang = "add"]
+pub trait Add<Rhs = Self> {
+    type Output;
+    fn add(self, rhs: Rhs) -> Self::Output;
+}
+
+impl Add for i32 {
+    type Output = i32;
+
+    #[inline]
+    fn add(self, rhs: Self) -> Self::Output {
+        self + rhs
+    }
+}
+
+#[lang = "eq"]
+pub trait PartialEq<Rhs = Self> {
+    fn ne(&self, other: &Rhs) -> bool;
+}
+
+impl PartialEq for i32 {
+    fn ne(&self, other: &Self) -> bool {
+        *self != *other
+    }
+}
+```
+
+To work with any integer, `Copy` and `Sized` traits are rquired. To implement `Add` trait `impl
+Copy for i32 {}` line is required, otherwise compilation fails with ICE. `PartialEq` is used for
+`n != 1_000_000_000` so the only required method is `ne`. For each trait `#[lang_item]` is used so
+compiler knows, that these are the same traits as from libcore.
+
+#### Start function
+
+```rust
+#[lang = "start"]
+fn start<T>(_main: fn() -> T, _argc: isize, _argv: *const *const u8, _: u8) -> isize {
+    unsafe { printf(b"%d" as *const u8 as *const c_char, s()) };
+    0
+}
+```
+
+Defines a start point of program (and of course `#[lang_item]` is required). The only thing start
+function does is printing a billion with `printf` function and returning 0 as a signal of
+successful execution.
 
 ## TODO
 
 Support Windows, BSDs and something more
-
-Better description

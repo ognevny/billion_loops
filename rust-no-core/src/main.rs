@@ -4,7 +4,6 @@
 #![feature(lang_items)]
 #![feature(arbitrary_self_types)]
 #![no_core]
-#![no_std]
 
 #[cfg(target_os = "linux")]
 #[link(name = "c")]
