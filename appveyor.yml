@@ -1,0 +1,17 @@
+version: 1.0.{build}
+image:
+  - Visual Studio 2019
+
+install:
+  - cmd: python -m pip install meson ninja
+  - cmd: appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
+  - cmd: rustup-init -yv --default-toolchain nightly --default-host x86_64-pc-windows-msvc
+  - cmd: set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+
+build_script:
+  - cmd: meson setup build
+  - cmd: meson compile -C build
+
+test_script:
+  - cmd: meson test --benchmark -C build
+  - cmd: Measure-Command { python py/speedometer.py }
