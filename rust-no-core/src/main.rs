@@ -12,7 +12,13 @@ unsafe extern {}
 #[link(name = "System")]
 unsafe extern {}
 #[cfg(target_os = "windows")]
-#[link(name = "kernel32.dll")]
+#[link(name = "kernel32")]
+unsafe extern {}
+#[cfg(target_os = "windows")]
+#[link(name = "user32")]
+unsafe extern {}
+#[cfg(target_os = "windows")]
+#[link(name = "msvcrt")]
 unsafe extern {}
 
 #[cfg(target_os = "linux")]
