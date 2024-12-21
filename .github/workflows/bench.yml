@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - name: run bench
         run: |
           pip install numba
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - name: run bench
         run: |
           pip install numba
@@ -70,5 +70,4 @@ jobs:
         shell: msys2 {0}
         env:
           RUSTC_BOOTSTRAP: 1
-        continue-on-error: true
         run: make
