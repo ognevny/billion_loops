@@ -95,24 +95,3 @@ jobs:
           meson compile -C build
           meson test --benchmark -C build
           time python py/speedometer.py
-  x86_64-windows-msvc:
-    name: Benchmark on x86_64 Windows (MSVC)
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: download deps
-        run: |
-          pip install -q numba meson
-          rustup default nightly && rustup update nightly
-      - name: run bench
-        continue-on-error: true
-        run: |
-          meson setup --backend=vs build
-          meson compile -C build
-          meson test --benchmark -C build
-          Measure-Command { python py/speedometer.py } && Measure-Command { python py-numba/numbed.py }
