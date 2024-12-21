@@ -2,9 +2,9 @@ name: Benchmark
 
 on:
   push:
-    paths: ["**.rs", "**.c*", "**.py", "**.toml", "**.lock", "Makefile"]
+    paths: ["**.rs", "**.c*", "**.py", "**.toml", "**.lock", "meson.build", "**/bench.yml"]
   pull_request:
-    paths: ["**.rs", "**.c*", "**.py", "**.toml", "**.lock", "Makefile"]
+    paths: ["**.rs", "**.c*", "**.py", "**.toml", "**.lock", "meson.build", "**/bench.yml"]
   workflow_dispatch:
 
 env:
