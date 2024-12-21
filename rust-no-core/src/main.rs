@@ -27,6 +27,9 @@ unsafe extern "C" {
 #[lang = "sized"]
 pub trait Sized {}
 
+#[lang = "receiver"]
+pub trait Receiver {}
+
 #[lang = "copy"]
 pub trait Copy {}
 impl Copy for i32 {}
