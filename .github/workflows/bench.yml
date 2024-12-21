@@ -13,15 +13,21 @@ env:
 jobs:
   x86_64-linux:
     name: Benchmark on x86_64 Linux (Ubuntu)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
       - name: download deps
-        run: sudo apt-get -y -q install make gcc python3-numba
+        run: |
+          sudo apt-get -y -q install meson gcc
+          rustup default nightly && rustup update nightly
       - name: run bench
-        run: make
+        run: |
+          meson setup build
+          meson compile -C build
+          meson test --benchmark -C build
+          time python3 py/speedometer.py
   x86_64-macos:
     name: Benchmark on x86_64 MacOS
     runs-on: macos-13
@@ -32,10 +38,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: download deps
+        run: |
+          pip install -q numba
+          brew install meson
+          rustup default nightly && rustup update nightly
       - name: run bench
         run: |
-          pip install numba
-          make
+          meson setup build
+          meson compile -C build
+          meson test --benchmark -C build
+          time python3 py/speedometer.py && time python3 py-numba/numbed.py
   aarch64-macos:
     name: Benchmark on aarch64 MacOS
     runs-on: macos-latest
@@ -46,10 +59,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: download deps
+        run: |
+          pip install -q numba
+          brew install meson
+          rustup default nightly && rustup update nightly
       - name: run bench
         run: |
-          pip install numba
-          make
+          meson setup build
+          meson compile -C build
+          meson test --benchmark -C build
+          time python3 py/speedometer.py && time python3 py-numba/numbed.py
   x86_64-windows-gnu:
     name: Benchmark on x86_64 Windows (MinGW)
     runs-on: windows-latest
@@ -65,9 +85,34 @@ jobs:
             cc
             rust
             python
-            make:
+            meson
       - name: run bench
         shell: msys2 {0}
         env:
           RUSTC_BOOTSTRAP: 1
-        run: make
+        run: |
+          meson setup build
+          meson compile -C build
+          meson test --benchmark -C build
+          time python py/speedometer.py
+  x86_64-windows-msvc:
+    name: Benchmark on x86_64 Windows (MSVC)
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: download deps
+        run: |
+          pip install -q numba meson
+          rustup default nightly && rustup update nightly
+      - name: run bench
+        continue-on-error: true
+        run: |
+          meson setup --backend=vs build
+          meson compile -C build
+          meson test --benchmark -C build
+          Measure-Command { python py/speedometer.py } && Measure-Command { python py-numba/numbed.py }
