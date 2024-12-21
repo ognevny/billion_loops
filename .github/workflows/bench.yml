@@ -1,0 +1,74 @@
+name: Benchmark
+
+on:
+  push:
+    paths: ["**.rs", "**.c*", "**.py", "**.toml", "**.lock", "Makefile"]
+  pull_request:
+    paths: ["**.rs", "**.c*", "**.py", "**.toml", "**.lock", "Makefile"]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: "always"
+
+jobs:
+  x86_64-linux:
+    name: Benchmark on x86_64 Linux (Ubuntu)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: download deps
+        run: sudo apt-get -y -q install make gcc python3-numba
+      - name: run bench
+        run: make
+  x86_64-macos:
+    name: Benchmark on x86_64 MacOS
+    runs-on: macos-13
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: run bench
+        run: |
+          pip install numba
+          make
+  aarch64-macos:
+    name: Benchmark on aarch64 MacOS
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: run bench
+        run: |
+          pip install numba
+          make
+  x86_64-windows-gnu:
+    name: Benchmark on x86_64 Windows (MinGW)
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          pacboy: >-
+            cc
+            rust
+            python
+            make:
+      - name: run bench
+        shell: msys2 {0}
+        env:
+          RUSTC_BOOTSTRAP: 1
+        continue-on-error: true
+        run: make
