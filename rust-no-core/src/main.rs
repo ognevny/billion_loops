@@ -12,19 +12,13 @@ unsafe extern {}
 #[link(name = "System")]
 unsafe extern {}
 #[cfg(target_os = "windows")]
-#[link(name = "kernel32")]
-unsafe extern {}
-#[cfg(target_os = "windows")]
-#[link(name = "user32")]
-unsafe extern {}
-#[cfg(target_os = "windows")]
 #[link(name = "msvcrt")]
 unsafe extern {}
 
-#[cfg(target_os = "linux")]
-pub type c_char = i8;
-#[cfg(not(target_os = "linux"))]
+#[cfg(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64")))]
 pub type c_char = u8;
+#[cfg(not(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64"))))]
+pub type c_char = i8;
 
 unsafe extern "C" {
     fn printf(format: *const c_char, ...) -> i32;

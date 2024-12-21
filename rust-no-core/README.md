@@ -33,20 +33,20 @@ unsafe extern {}
 #[link(name = "System")]
 unsafe extern {}
 #[cfg(target_os = "windows")]
-#[link(name = "kernel32.dll")]
+#[link(name = "msvcrt")]
 unsafe extern {}
 ```
 
 To run the program the start point is needed. These start points are defined in core libraries. For
-Linux it's `libc`, for Mac it's `System`, on Windows there are some dlls needed.
+Linux it's `libc`, for Mac it's `System`, on Windows it's `msvcrt`.
 
 #### c_char
 
 ```rust
-#[cfg(target_os = "linux")]
-pub type c_char = i8;
-#[cfg(not(target_os = "linux"))]
+#[cfg(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64")))]
 pub type c_char = u8;
+#[cfg(not(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64"))))]
+pub type c_char = i8;
 ```
 
 Properly define c_char type for `printf` function depending on OS.

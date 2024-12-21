@@ -58,4 +58,8 @@ rust-no-core: build_dir
 time-rust-no-core: rust-no-core
 	time build/bl_rs-no-core$(EXE_SUFFIX)
 
+.PHONY: clean
+clean:
+	rm -r build
+
 # TODO: better Windows support
