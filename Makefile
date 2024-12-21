@@ -1,6 +1,7 @@
 CC ?= cc
 CXX ?= cxx
 RUSTC ?= rustc
+PYTHON ?= python3
 TIME ?= time
 EXE_SUFFIX :=
 ifeq ($(OS),Windows_NT)
@@ -33,11 +34,11 @@ time-cpp: cpp
 
 .PHONY: py
 py:
-	time python py/speedometer.py
+	time $(PYTHON) py/speedometer.py
 
 .PHONY: py-numba
 py-numba:
-	time python py-numba/numbed.py
+	time $(PYTHON) py-numba/numbed.py || true
 
 .PHONY: rust
 rust: build_dir
