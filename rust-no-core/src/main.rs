@@ -7,17 +7,17 @@
 
 #[cfg(target_os = "linux")]
 #[link(name = "c")]
-unsafe extern {}
+unsafe extern "C" {}
 #[cfg(target_os = "macos")]
 #[link(name = "System")]
-unsafe extern {}
+unsafe extern "C" {}
 #[cfg(target_os = "windows")]
 #[link(name = "msvcrt")]
-unsafe extern {}
+unsafe extern "C" {}
 
-#[cfg(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64")))]
+#[cfg(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64"))]
 pub type c_char = u8;
-#[cfg(not(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64"))))]
+#[cfg(not(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64")))]
 pub type c_char = i8;
 
 unsafe extern "C" {
@@ -41,7 +41,7 @@ pub trait Add<Rhs = Self> {
 }
 
 impl Add for i32 {
-    type Output = i32;
+    type Output = Self;
 
     #[inline]
     fn add(self, rhs: Self) -> Self::Output {
