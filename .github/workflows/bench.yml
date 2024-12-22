@@ -92,6 +92,31 @@ jobs:
           meson compile -C build
           meson test --benchmark -C build
           time python py/speedometer.py
+  x86_64-windows-gnullvm:
+    name: Benchmark on x86_64 Windows (MinGW/LLVM)
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: CLANG64
+          update: true
+          pacboy: >-
+            cc
+            rust
+            python
+            meson
+      - name: run bench
+        shell: msys2 {0}
+        env:
+          RUSTC_BOOTSTRAP: 1
+        run: |
+          meson setup build
+          meson compile -C build
+          meson test --benchmark -C build
+          time python py/speedometer.py
   x86_64-windows-msvc:
     name: Benchmark on x86_64 Windows (MSVC)
     runs-on: windows-latest
