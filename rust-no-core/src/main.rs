@@ -19,7 +19,7 @@ unsafe extern "C" {}
 
 #[cfg(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64"))]
 pub type c_char = u8;
-#[cfg(not(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64")))]
+#[cfg(any(windows, target_vendor = "apple", not(target_arch = "aarch64")))]
 pub type c_char = i8;
 
 unsafe extern "C" {

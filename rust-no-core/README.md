@@ -45,9 +45,9 @@ Linux it's `libc`, for Mac it's `System`, on Windows it's `msvcrt`.
 #### c_char
 
 ```rust
-#[cfg(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64")))]
+#[cfg(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64"))]
 pub type c_char = u8;
-#[cfg(not(all(not(windows), not(target_vendor = "apple"), any(target_arch = "aarch64"))))]
+#[cfg(any(windows, target_vendor = "apple", not(target_arch = "aarch64")))]
 pub type c_char = i8;
 ```
 
@@ -58,6 +58,9 @@ Properly define c_char type for `printf` function depending on OS.
 ```rust
 #[lang = "sized"]
 pub trait Sized {}
+
+#[lang = "receiver"]
+pub trait Receiver {}
 
 #[lang = "copy"]
 pub trait Copy {}
@@ -93,7 +96,8 @@ impl PartialEq for i32 {
 To work with any integer, `Copy` and `Sized` traits are rquired. To implement `Add` trait `impl
 Copy for i32 {}` line is required, otherwise compilation fails with ICE. `PartialEq` is used for
 `n != 1_000_000_000` so the only required method is `ne`. For each trait `#[lang_item]` is used so
-compiler knows, that these are the same traits as from libcore.
+compiler knows, that these are the same traits as from libcore. I don't know why but some machines
+require `Receiver` item.
 
 #### Start function
 
@@ -111,4 +115,4 @@ successful execution.
 
 ## TODO
 
-Support Windows, BSDs and something more
+Probably support BSDs and something more
