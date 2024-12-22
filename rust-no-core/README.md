@@ -113,6 +113,37 @@ Defines a start point of program (and of course `#[lang_item]` is required). The
 function does is printing a billion with `printf` function and returning 0 as a signal of
 successful execution.
 
+## Performance boost?
+
+According to [table](../README.md#Benchmarking) this code isn't faster than the std one. But look at
+binary size (Example for my Arch machine)
+
+```shell
+$ find build -type f -executable -exec dust -b {} \;
+16K ┌── sanitycheckc.exe
+16K ┌── sanitycheckcpp.exe
+3.8M ┌── rusttest
+8.0K ┌── bl_rs-no-core
+16K ┌── bl_c
+3.8M ┌── bl_rs
+16K ┌── bl_cpp
+```
+
+"No core" binary is nearly x475 less than std binary! But what about to strip `bl_rs`?
+
+```shell
+$ strip build/bl_rs
+$ dust -b build/bl_rs
+352K ┌── bl_rs
+```
+
+It's still x44 bigger than "no core" one. So such method is great for making very small executables,
+while it requires much more time to write though.
+
 ## TODO
 
 Probably support BSDs and something more
+
+```
+
+```
