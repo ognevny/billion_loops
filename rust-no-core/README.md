@@ -115,8 +115,8 @@ successful execution.
 
 ## Performance boost?
 
-According to [table](../README.md#Benchmarking) this code isn't faster than the std one. But look at
-binary size (Example for my Arch machine)
+According to the [table](../README.md#Benchmarking) this code isn't faster than the std one. But
+look at binary size (running on my Arch machine)
 
 ```shell
 $ find build -type f -executable -exec dust -b {} \;
@@ -143,7 +143,3 @@ while it requires much more time to write though.
 ## TODO
 
 Probably support BSDs and something more
-
-```
-
-```
