@@ -5,14 +5,16 @@
 #![feature(arbitrary_self_types)]
 #![no_core]
 
-#[cfg(target_os = "linux")]
-#[link(name = "c")]
+#[cfg_attr(target_os = "linux", link(name = "c"))]
 unsafe extern "C" {}
-#[cfg(target_os = "macos")]
-#[link(name = "System")]
+#[cfg_attr(target_os = "macos", link(name = "System"))]
 unsafe extern "C" {}
-#[cfg(target_os = "windows")]
-#[link(name = "msvcrt")]
+#[cfg_attr(windows, link(name = "msvcrt"))]
+unsafe extern "C" {}
+#[cfg_attr(
+    all(windows, target_env = "msvc"),
+    link(name = "legacy_stdio_definitions", kind = "static")
+)]
 unsafe extern "C" {}
 
 #[cfg(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64"))]

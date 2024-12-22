@@ -26,15 +26,17 @@ any). The third one allows manual implementing of PartialEq. Also 2 warnings are
 #### Exporting core libs
 
 ```rust
-#[cfg(target_os = "linux")]
-#[link(name = "c")]
-unsafe extern {}
-#[cfg(target_os = "macos")]
-#[link(name = "System")]
-unsafe extern {}
-#[cfg(target_os = "windows")]
-#[link(name = "msvcrt")]
-unsafe extern {}
+#[cfg_attr(target_os = "linux", link(name = "c"))]
+unsafe extern "C" {}
+#[cfg_attr(target_os = "macos", link(name = "System"))]
+unsafe extern "C" {}
+#[cfg_attr(windows, link(name = "msvcrt"))]
+unsafe extern "C" {}
+#[cfg_attr(
+    all(windows, target_env = "msvc"),
+    link(name = "legacy_stdio_definitions", kind = "static-nobundle")
+)]
+unsafe extern "C" {}
 ```
 
 To run the program the start point is needed. These start points are defined in core libraries. For
