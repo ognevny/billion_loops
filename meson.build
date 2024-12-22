@@ -9,7 +9,9 @@ project(
         'rust_std=2021',
         'cpp_std=c++11',
         'c_std=c99',
+        'b_ndebug=true',
     ],
+    meson_version: '>= 1.2.0',
 )
 
 bl_c = executable('bl_c', sources: 'c/speedometer.c')
@@ -17,12 +19,12 @@ bl_cpp = executable('bl_cpp', sources: 'cpp/speedometer.cpp')
 bl_rs = executable(
     'bl_rs',
     sources: 'rust/src/main.rs',
-    rust_args: ['-Cpanic=abort', '-Coverflow-checks=false'],
+    rust_args: ['-Cpanic=abort'],
 )
 bl_rs_no_core = executable(
     'bl_rs-no-core',
     sources: 'rust-no-core/src/main.rs',
-    rust_args: ['-Cpanic=abort', '-Coverflow-checks=false'],
+    rust_args: ['-Cpanic=abort'],
 )
 
 benchmark('Bench C', bl_c)
