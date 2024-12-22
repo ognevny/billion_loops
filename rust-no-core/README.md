@@ -34,7 +34,7 @@ unsafe extern "C" {}
 unsafe extern "C" {}
 #[cfg_attr(
     all(windows, target_env = "msvc"),
-    link(name = "legacy_stdio_definitions", kind = "static-nobundle")
+    link(name = "legacy_stdio_definitions", kind = "static")
 )]
 unsafe extern "C" {}
 ```
