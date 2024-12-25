@@ -12,3 +12,7 @@ debug = false
 overflow-checks = false
 panic = "abort"
 debug-assertions = false
+
+[profile.release]
+overflow-checks = false
+panic = "abort"

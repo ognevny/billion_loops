@@ -1,8 +1,6 @@
-#![feature(no_core)]
-#![allow(non_camel_case_types)]
-#![allow(internal_features)]
-#![feature(lang_items)]
-#![feature(arbitrary_self_types)]
+#![allow(non_camel_case_types, reason = "to define a c_char")]
+#![allow(internal_features, reason = "to reduce noise from rustc")]
+#![feature(arbitrary_self_types, lang_items, no_core)]
 #![no_core]
 
 #[cfg_attr(target_os = "linux", link(name = "c"))]
@@ -46,9 +44,7 @@ impl Add for i32 {
     type Output = Self;
 
     #[inline]
-    fn add(self, rhs: Self) -> Self::Output {
-        self + rhs
-    }
+    fn add(self, rhs: Self) -> Self::Output { self + rhs }
 }
 
 #[lang = "eq"]
@@ -57,9 +53,7 @@ pub trait PartialEq<Rhs = Self> {
 }
 
 impl PartialEq for i32 {
-    fn ne(&self, other: &Self) -> bool {
-        *self != *other
-    }
+    fn ne(&self, other: &Self) -> bool { *self != *other }
 }
 
 fn s() -> i32 {
@@ -72,7 +66,9 @@ fn s() -> i32 {
 
 #[lang = "start"]
 fn start<T>(_main: fn() -> T, _argc: isize, _argv: *const *const u8, _: u8) -> isize {
-    unsafe { printf(b"%d" as *const u8 as *const c_char, s()) };
+    unsafe {
+        printf(b"%d" as *const u8 as *const c_char, s());
+    }
     0
 }
 
