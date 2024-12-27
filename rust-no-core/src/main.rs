@@ -1,5 +1,4 @@
-#![allow(non_camel_case_types, reason = "to define a c_char")]
-#![allow(internal_features, reason = "to reduce noise from rustc")]
+#![allow(non_camel_case_types, internal_features, reason = "to remove annoying warnings")]
 #![feature(arbitrary_self_types, lang_items, no_core)]
 #![no_core]
 

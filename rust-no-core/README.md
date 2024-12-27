@@ -4,11 +4,8 @@ how it works.
 #### Attributes block
 
 ```rust
-#![feature(no_core)]
-#![allow(non_camel_case_types)]
-#![allow(internal_features)]
-#![feature(lang_items)]
-#![feature(arbitrary_self_types)]
+#![allow(non_camel_case_types, internal_features, reason = "to remove annoying warnings")]
+#![feature(arbitrary_self_types, lang_items, no_core)]
 #![no_core]
 ```
 
@@ -27,15 +24,10 @@ any). The third one allows manual implementing of PartialEq. Also 2 warnings are
 
 ```rust
 #[cfg_attr(target_os = "linux", link(name = "c"))]
-unsafe extern "C" {}
 #[cfg_attr(target_os = "macos", link(name = "System"))]
-unsafe extern "C" {}
 #[cfg_attr(windows, link(name = "msvcrt"))]
 unsafe extern "C" {}
-#[cfg_attr(
-    all(windows, target_env = "msvc"),
-    link(name = "legacy_stdio_definitions", kind = "static")
-)]
+#[cfg_attr(all(windows, target_env = "msvc"), link(name = "legacy_stdio_definitions"))]
 unsafe extern "C" {}
 ```
 
@@ -73,12 +65,10 @@ pub trait Add<Rhs = Self> {
 }
 
 impl Add for i32 {
-    type Output = i32;
+    type Output = Self;
 
     #[inline]
-    fn add(self, rhs: Self) -> Self::Output {
-        self + rhs
-    }
+    fn add(self, rhs: Self) -> Self::Output { self + rhs }
 }
 
 #[lang = "eq"]
@@ -87,9 +77,8 @@ pub trait PartialEq<Rhs = Self> {
 }
 
 impl PartialEq for i32 {
-    fn ne(&self, other: &Self) -> bool {
-        *self != *other
-    }
+    #[inline]
+    fn ne(&self, other: &Self) -> bool { *self != *other }
 }
 ```
 
@@ -104,7 +93,9 @@ require `Receiver` item.
 ```rust
 #[lang = "start"]
 fn start<T>(_main: fn() -> T, _argc: isize, _argv: *const *const u8, _: u8) -> isize {
-    unsafe { printf(b"%d" as *const u8 as *const c_char, s()) };
+    unsafe {
+        printf(b"%d" as *const u8 as *const c_char, s());
+    }
     0
 }
 ```
@@ -139,6 +130,17 @@ $ dust -b build/bl_rs
 
 It's still x44 bigger than "no core" one. So such method is great for making very small executables,
 while it requires much more time to write though.
+
+## Supported Platforms
+
+| Arch/OS | Linux | Windows | Macos | OpenBSD | FreeBSD |
+| ------- | ----- | ------- | ----- | ------- | ------- |
+| Aarch64 | +-    | +-      | +     | -       | -       |
+| x86_64  | +     | +       | +     | -       | -       |
+
++: Supported and tested
++-: Probably supported, not tested
+-: Not supported
 
 ## TODO
 
