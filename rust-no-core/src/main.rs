@@ -4,16 +4,14 @@
 #![no_core]
 
 #[cfg_attr(target_os = "linux", link(name = "c"))]
-unsafe extern "C" {}
 #[cfg_attr(target_os = "macos", link(name = "System"))]
+#[cfg_attr(windows, link(name = "ucrtbase"))]
 unsafe extern "C" {}
-#[cfg_attr(windows, link(name = "msvcrt"))]
-unsafe extern "C" {}
-#[cfg_attr(
-    all(windows, target_env = "msvc"),
-    link(name = "legacy_stdio_definitions", kind = "static")
-)]
-unsafe extern "C" {}
+// #[cfg_attr(
+//     all(windows, target_env = "msvc"),
+//     link(name = "legacy_stdio_definitions", kind = "static")
+// )]
+// unsafe extern "C" {}
 
 #[cfg(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64"))]
 pub type c_char = u8;
