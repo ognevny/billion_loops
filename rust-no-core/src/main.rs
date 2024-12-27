@@ -48,6 +48,7 @@ pub trait PartialEq<Rhs = Self> {
 }
 
 impl PartialEq for i32 {
+    #[inline]
     fn ne(&self, other: &Self) -> bool { *self != *other }
 }
 
