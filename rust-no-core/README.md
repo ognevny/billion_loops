@@ -23,7 +23,10 @@ any). The third one allows manual implementing of PartialEq. Also 2 warnings are
 #### Exporting core libs
 
 ```rust
-#[cfg_attr(target_os = "linux", link(name = "c"))]
+#[cfg_attr(
+    any(target_os = "linux", target_os = "openbsd", target_os = "freebsd"),
+    link(name = "c")
+)]
 #[cfg_attr(target_os = "macos", link(name = "System"))]
 #[cfg_attr(windows, link(name = "msvcrt"))]
 unsafe extern "C" {}
@@ -32,7 +35,8 @@ unsafe extern "C" {}
 ```
 
 To run the program the start point is needed. These start points are defined in core libraries. For
-Linux it's `libc`, for Mac it's `System`, on Windows it's `msvcrt`.
+Linux and BSDs it's `libc`, for Mac it's `System`, on Windows it's `msvcrt`. Also to make `printf`
+work on MSVC it's needed to link `legacy_stdio_definitions`.
 
 #### c_char
 
