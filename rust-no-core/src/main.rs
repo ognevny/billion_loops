@@ -2,7 +2,10 @@
 #![feature(arbitrary_self_types, lang_items, no_core)]
 #![no_core]
 
-#[cfg_attr(target_os = "linux", link(name = "c"))]
+#[cfg_attr(
+    any(target_os = "linux", target_os = "openbsd", target_os = "freebsd"),
+    link(name = "c")
+)]
 #[cfg_attr(target_os = "macos", link(name = "System"))]
 #[cfg_attr(windows, link(name = "msvcrt"))]
 unsafe extern "C" {}
