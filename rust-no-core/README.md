@@ -135,8 +135,8 @@ while it requires much more time to write though.
 
 | Arch/OS | Linux | Windows | Macos | OpenBSD | FreeBSD |
 | ------- | ----- | ------- | ----- | ------- | ------- |
-| Aarch64 | +-    | +-      | +     | -       | -       |
-| x86_64  | +     | +       | +     | -       | -       |
+| Aarch64 | +-    | +-      | +     | +-      | +-      |
+| x86_64  | +     | +       | +     | +-      | +       |
 
 +: Supported and tested
 +-: Probably supported, not tested
@@ -144,4 +144,4 @@ while it requires much more time to write though.
 
 ## TODO
 
-Probably support BSDs and something more
+Test OpenBSD and probably some more OS
