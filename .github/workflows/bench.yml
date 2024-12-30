@@ -156,6 +156,24 @@ jobs:
   #           meson compile -C build
   #           meson test --benchmark -C build
   #           time python py/speedometer.py
+  x86_64-cross-openbsd:
+    name: Compile rust-no-core for OpenBSD (cross compilation on Ubuntu)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile bl_rs-no-core for `x86_64-unknown-openbsd` target
+        run: |
+          rustup default nightly
+          rustup component add rust-src
+          cargo build --target=x86_64-unknown-openbsd -p bl_rs-no-core -Zbuild-std
+      # - name: run bench
+      #   uses: vmactions/openbsd-vm@v1
+      #   with:
+      #     usesh: true
+      #     copyback: false
+      #     run: time ./target/x86_64-unknown-openbsd/debug/bl_rs-no-core
   x86_64-freebsd:
     name: Benchmark on x86_64 FreeBSD (VM on Ubuntu)
     runs-on: ubuntu-latest
