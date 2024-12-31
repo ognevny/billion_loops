@@ -9,6 +9,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: "always"
+  DEBIAN_FRONTEND: noninteractive
 
 jobs:
   x86_64-linux:
@@ -195,3 +196,18 @@ jobs:
             meson compile -C build
             meson test --benchmark -C build
             time python py/speedometer.py
+  x86_64-cross-musl:
+    name: Benchmark on x86_64 Linux with Musl (cross compilation on Ubuntu)
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: install musl things
+        run: |
+          sudo apt-get install -y -q musl-tools
+          rustup target add x86_64-unknown-linux-musl
+      - name: run bench
+        run: |
+          cargo build --target=x86_64-unknown-linux-musl -p bl_rs-no-core
+          time target/x86_64-unknown-linux-musl/debug/bl_rs-no-core
