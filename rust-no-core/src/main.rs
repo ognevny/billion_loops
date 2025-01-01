@@ -30,10 +30,13 @@ pub trait Receiver {}
 #[lang = "copy"]
 pub trait Copy {}
 impl Copy for i32 {}
+impl Copy for bool {}
 
 #[lang = "add"]
 pub trait Add<Rhs = Self> {
     type Output;
+
+    #[must_use]
     fn add(self, rhs: Rhs) -> Self::Output;
 }
 
@@ -44,19 +47,35 @@ impl Add for i32 {
     fn add(self, rhs: Self) -> Self::Output { self + rhs }
 }
 
+#[lang = "not"]
+pub trait Not {
+    type Output;
+
+    #[must_use]
+    fn not(self) -> Self::Output;
+}
+
+impl Not for bool {
+    type Output = Self;
+
+    #[inline]
+    fn not(self) -> Self::Output { !self }
+}
+
 #[lang = "eq"]
 pub trait PartialEq<Rhs = Self> {
-    fn ne(&self, other: &Rhs) -> bool;
+    #[must_use]
+    fn eq(&self, other: &Rhs) -> bool;
 }
 
 impl PartialEq for i32 {
     #[inline]
-    fn ne(&self, other: &Self) -> bool { *self != *other }
+    fn eq(&self, other: &Self) -> bool { *self == *other }
 }
 
 fn s() -> i32 {
     let mut n: i32 = 0;
-    while n != 1_000_000_000 {
+    while !(n == 1_000_000_000) {
         n = n + 1;
     }
     n
