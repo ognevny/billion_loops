@@ -2,21 +2,22 @@
 #![feature(arbitrary_self_types, lang_items, no_core)]
 #![no_core]
 
-#[cfg_attr(
-    any(target_os = "linux", target_os = "openbsd", target_os = "freebsd"),
-    link(name = "c")
-)]
-#[cfg_attr(target_os = "macos", link(name = "System"))]
-#[cfg_attr(windows, link(name = "msvcrt"))]
-unsafe extern "C" {}
-#[cfg_attr(all(windows, target_env = "msvc"), link(name = "legacy_stdio_definitions"))]
-unsafe extern "C" {}
-
 #[cfg(all(not(windows), not(target_vendor = "apple"), target_arch = "aarch64"))]
 pub type c_char = u8;
 #[cfg(any(windows, target_vendor = "apple", not(target_arch = "aarch64")))]
 pub type c_char = i8;
 
+#[cfg_attr(
+    any(target_os = "linux", target_os = "openbsd", target_os = "freebsd"),
+    link(name = "c")
+)]
+#[cfg_attr(target_os = "macos", link(name = "System"))]
+#[cfg_attr(all(windows, not(target_env = "msvc")), link(name = "msvcrt"))]
+#[cfg_attr(
+    all(windows, target_env = "msvc"),
+    link(name = "msvcrt"),
+    link(name = "legacy_stdio_definitions")
+)]
 unsafe extern "C" {
     fn printf(format: *const c_char, ...) -> i32;
 }
@@ -30,7 +31,6 @@ pub trait Receiver {}
 #[lang = "copy"]
 pub trait Copy {}
 impl Copy for i32 {}
-impl Copy for bool {}
 
 #[lang = "add"]
 pub trait Add<Rhs = Self> {
@@ -47,21 +47,6 @@ impl Add for i32 {
     fn add(self, rhs: Self) -> Self::Output { self + rhs }
 }
 
-#[lang = "not"]
-pub trait Not {
-    type Output;
-
-    #[must_use]
-    fn not(self) -> Self::Output;
-}
-
-impl Not for bool {
-    type Output = Self;
-
-    #[inline]
-    fn not(self) -> Self::Output { !self }
-}
-
 #[lang = "eq"]
 pub trait PartialEq<Rhs = Self> {
     #[must_use]
@@ -75,10 +60,12 @@ impl PartialEq for i32 {
 
 fn s() -> i32 {
     let mut n: i32 = 0;
-    while !(n == 1_000_000_000) {
+    loop {
         n = n + 1;
+        if n == 1_000_000_000 {
+            return n;
+        }
     }
-    n
 }
 
 #[lang = "start"]
