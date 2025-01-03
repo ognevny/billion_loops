@@ -58,6 +58,7 @@ impl PartialEq for i32 {
     fn eq(&self, other: &Self) -> bool { *self == *other }
 }
 
+#[inline]
 fn s() -> i32 {
     let mut n: i32 = 0;
     loop {

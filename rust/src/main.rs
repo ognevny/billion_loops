@@ -1,3 +1,4 @@
+#[inline]
 fn s() -> i32 {
     let mut n = 1;
     while n < 1_000_000_000 {
