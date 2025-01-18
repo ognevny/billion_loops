@@ -25,8 +25,8 @@ unsafe extern "C" {
 #[lang = "sized"]
 pub trait Sized {}
 
-#[lang = "receiver"]
-pub trait Receiver {}
+#[lang = "legacy_receiver"]
+pub trait LegacyReceiver {}
 
 #[lang = "copy"]
 pub trait Copy {}
