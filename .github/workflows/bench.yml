@@ -28,6 +28,23 @@ jobs:
           meson compile -C build
           meson test --benchmark -C build
           time python3 py/speedometer.py
+  aarch64-linux:
+    name: Benchmark on Aarch64 Linux (Ubuntu)
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: download deps
+        run: |
+          sudo apt-get -y -q install meson gcc
+      - name: run bench
+        run: |
+          meson setup build
+          meson compile -C build
+          meson test --benchmark -C build
+          time python3 py/speedometer.py
+
   x86_64-macos:
     name: Benchmark on x86_64 MacOS
     runs-on: macos-13
