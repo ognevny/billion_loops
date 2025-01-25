@@ -101,6 +101,7 @@ jobs:
             rust
             python
             meson
+            python-numba
       - name: run bench
         shell: msys2 {0}
         env:
@@ -109,7 +110,7 @@ jobs:
           meson setup build
           meson compile -C build
           meson test --benchmark -C build
-          time python py/speedometer.py
+          time python py/speedometer.py && time python py-numba/numbed.py
   x86_64-windows-gnullvm:
     name: Benchmark on x86_64 Windows (MinGW/LLVM)
     runs-on: windows-latest
@@ -126,6 +127,7 @@ jobs:
             rust
             python
             meson
+            python-numba
       - name: run bench
         shell: msys2 {0}
         env:
@@ -134,7 +136,7 @@ jobs:
           meson setup build
           meson compile -C build
           meson test --benchmark -C build
-          time python py/speedometer.py
+          time python py/speedometer.py && time python py-numba/numbed.py
   x86_64-windows-msvc:
     name: Benchmark on x86_64 Windows (MSVC)
     runs-on: windows-latest
