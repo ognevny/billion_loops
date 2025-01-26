@@ -47,7 +47,7 @@ jobs:
 
   x86_64-macos:
     name: Benchmark on x86_64 MacOS
-    runs-on: macos-13
+    runs-on: macos-14
     strategy:
       fail-fast: false
     steps:
