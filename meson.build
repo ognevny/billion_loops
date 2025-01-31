@@ -6,12 +6,12 @@ project(
         'buildtype=plain',
         'debug=false',
         'warning_level=0',
-        'rust_std=2021',
+        'rust_std=2024',
         'cpp_std=c++11',
         'c_std=c99',
         'b_ndebug=true',
     ],
-    meson_version: '>= 1.2.0',
+    meson_version: '>= 1.7.0',
 )
 
 bl_c = executable('bl_c', sources: 'c/speedometer.c')
