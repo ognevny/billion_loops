@@ -1,5 +1,3 @@
-cargo-features = ["edition2024"]
-
 [workspace]
 members = ["rust", "rust-no-core"]
 resolver = "3"
