@@ -19,9 +19,13 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: download deps
         run: |
-          sudo apt-get -y -q install meson gcc
+          sudo apt-get -y -q install gcc
+          pip install meson ninja
       - name: run bench
         run: |
           meson setup build
@@ -35,9 +39,13 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: download deps
         run: |
-          sudo apt-get -y -q install meson gcc
+          sudo apt-get -y -q install gcc
+          pip install meson ninja
       - name: run bench
         run: |
           meson setup build
@@ -58,7 +66,7 @@ jobs:
       - name: download deps
         run: |
           pip install -q numba
-          brew install meson
+          brew update && brew install meson
       - name: run bench
         run: |
           meson setup build
@@ -78,7 +86,7 @@ jobs:
       - name: download deps
         run: |
           pip install -q numba
-          brew install meson
+          brew update && brew install meson
       - name: run bench
         run: |
           meson setup build
@@ -222,7 +230,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - name: install musl things
+      - name: install deps
         run: |
           sudo apt-get install -y -q musl-tools
           rustup target add x86_64-unknown-linux-musl
