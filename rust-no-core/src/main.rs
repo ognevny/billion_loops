@@ -12,12 +12,7 @@ pub type c_char = i8;
     link(name = "c")
 )]
 #[cfg_attr(target_os = "macos", link(name = "System"))]
-#[cfg_attr(all(windows, not(target_env = "msvc")), link(name = "msvcrt"))]
-#[cfg_attr(
-    all(windows, target_env = "msvc"),
-    link(name = "msvcrt"),
-    link(name = "legacy_stdio_definitions")
-)]
+#[cfg_attr(windows, link(name = "msvcrt.dll", kind = "raw-dylib", modifiers = "+verbatim"))]
 unsafe extern "C" {
     fn printf(format: *const c_char, ...) -> i32;
 }
