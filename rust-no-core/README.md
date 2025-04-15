@@ -183,7 +183,7 @@ actually achieved by stripping binary.
 
 | Arch/OS | Linux | Windows | Macos | OpenBSD | FreeBSD |
 | ------- | ----- | ------- | ----- | ------- | ------- |
-| Aarch64 | +     | +-      | +     | +-      | +-      |
+| Aarch64 | +     | +       | +     | +-      | +-      |
 | x86_64  | +     | +       | +     | +-      | +       |
 
 +: Supported and tested
