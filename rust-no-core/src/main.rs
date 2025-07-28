@@ -22,11 +22,14 @@ unsafe extern "C" {
     fn printf(format: *const c_char, ...) -> i32;
 }
 
-#[lang = "sized"]
-pub trait Sized {}
+#[lang = "pointee_sized"]
+pub trait PointeeSized {}
 
-#[lang = "legacy_receiver"]
-pub trait LegacyReceiver {}
+#[lang = "meta_sized"]
+pub trait MetaSized: PointeeSized {}
+
+#[lang = "sized"]
+pub trait Sized: MetaSized {}
 
 #[lang = "copy"]
 pub trait Copy {}
@@ -48,7 +51,7 @@ impl Add for i32 {
 }
 
 #[lang = "eq"]
-pub trait PartialEq<Rhs = Self> {
+pub trait PartialEq<Rhs: PointeeSized = Self>: PointeeSized {
     #[must_use]
     fn eq(&self, other: &Rhs) -> bool;
 }

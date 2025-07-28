@@ -57,11 +57,14 @@ work on MSVC it's needed to link `legacy_stdio_definitions`.
 #### Defining language items
 
 ```rust
-#[lang = "sized"]
-pub trait Sized {}
+#[lang = "pointee_sized"]
+pub trait PointeeSized {}
 
-#[lang = "receiver"]
-pub trait Receiver {}
+#[lang = "meta_sized"]
+pub trait MetaSized: PointeeSized {}
+
+#[lang = "sized"]
+pub trait Sized: MetaSized {}
 
 #[lang = "copy"]
 pub trait Copy {}
@@ -83,7 +86,7 @@ impl Add for i32 {
 }
 
 #[lang = "eq"]
-pub trait PartialEq<Rhs = Self> {
+pub trait PartialEq<Rhs: PointeeSized = Self>: PointeeSized {
     #[must_use]
     fn eq(&self, other: &Rhs) -> bool;
 }
@@ -94,11 +97,11 @@ impl PartialEq for i32 {
 }
 ```
 
-To work with any integer, `Copy` and `Sized` traits are rquired. To implement `Add` trait `impl
-Copy for i32 {}` line is required, otherwise compilation fails with ICE. `PartialEq` is used for
-`n != 1_000_000_000` so the only required method is `ne`. For each trait `#[lang_item]` is used so
-compiler knows, that these are the same traits as from libcore. I don't know why but some machines
-require `Receiver` item.
+To work with any integer, `Copy`, `Sized`, `MetaSized` and `PointeeSized` traits are rquired. To
+implement `Add` trait `impl Copy for i32 {}` line is required, otherwise compilation fails with ICE.
+`PartialEq` is used for `n != 1_000_000_000` so the only required method is `ne`. For each trait
+`#[lang_item]` is used so compiler knows, that these are the same traits as from libcore. I don't
+know why but some machines require `Receiver` item.
 
 #### Start function
 

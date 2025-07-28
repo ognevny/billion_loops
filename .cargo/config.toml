@@ -1,0 +1,15 @@
+[unstable]
+build-std = ["core", "panic_abort"]
+build-std-features = ["panic_immediate_abort", "optimize_for_size"]
+
+[build]
+rustflags = [
+    "-C",
+    "opt-level=s",
+    "-C",
+    "codegen-units=1",
+    "-Z",
+    "location-detail=none",
+    "-Z",
+    "fmt-debug=none",
+]
