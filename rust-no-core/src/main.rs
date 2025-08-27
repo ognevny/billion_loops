@@ -7,17 +7,10 @@ pub type c_char = u8;
 #[cfg(any(windows, target_vendor = "apple", not(target_arch = "aarch64")))]
 pub type c_char = i8;
 
-#[cfg_attr(
-    any(target_os = "linux", target_os = "openbsd", target_os = "freebsd"),
-    link(name = "c")
-)]
+#[cfg_attr(any(target_os = "linux", target_os = "openbsd", target_os = "freebsd"), link(name = "c"))]
 #[cfg_attr(target_os = "macos", link(name = "System"))]
 #[cfg_attr(all(windows, not(target_env = "msvc")), link(name = "msvcrt"))]
-#[cfg_attr(
-    all(windows, target_env = "msvc"),
-    link(name = "msvcrt"),
-    link(name = "legacy_stdio_definitions")
-)]
+#[cfg_attr(all(windows, target_env = "msvc"), link(name = "msvcrt"), link(name = "legacy_stdio_definitions"))]
 unsafe extern "C" {
     fn printf(format: *const c_char, ...) -> i32;
 }

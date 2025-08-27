@@ -243,7 +243,7 @@ jobs:
         run: |
           rustup default nightly
           rustup component add rust-src
-          cargo build --target=x86_64-unknown-openbsd -p bl_rs-no-core --config .cargo/config.toml
+          cargo build --target=x86_64-unknown-openbsd -p bl_rs-no-core --config .cargo/config-no-core.toml
       # - name: run bench
       #   uses: vmactions/openbsd-vm@v1
       #   with:
