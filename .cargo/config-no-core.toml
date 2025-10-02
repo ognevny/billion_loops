@@ -7,8 +7,6 @@ rustflags = [
     "-Z",
     "unstable-options",
     "-C",
-    "opt-level=s",
-    "-C",
     "codegen-units=1",
     "-Z",
     "location-detail=none",

@@ -28,8 +28,6 @@ bl_rs_no_core = executable(
         '-Z',
         'unstable-options',
         '-C',
-        'opt-level=s',
-        '-C',
         'codegen-units=1',
         '-Z',
         'location-detail=none',
