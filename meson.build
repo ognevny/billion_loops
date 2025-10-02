@@ -24,7 +24,20 @@ bl_rs = executable(
 bl_rs_no_core = executable(
     'bl_rs-no-core',
     sources: 'rust-no-core/src/main.rs',
-    rust_args: ['-Cpanic=abort'],
+    rust_args: [
+        '-Z',
+        'unstable-options',
+        '-C',
+        'opt-level=s',
+        '-C',
+        'codegen-units=1',
+        '-Z',
+        'location-detail=none',
+        '-Z',
+        'fmt-debug=none',
+        '-C',
+        'panic=immediate-abort',
+    ],
 )
 
 benchmark('Bench C', bl_c)

@@ -1,9 +1,11 @@
 [unstable]
 build-std = ["core", "panic_abort"]
-build-std-features = ["panic_immediate_abort", "optimize_for_size"]
+build-std-features = ["optimize_for_size"]
 
 [build]
 rustflags = [
+    "-Z",
+    "unstable-options",
     "-C",
     "opt-level=s",
     "-C",
@@ -12,4 +14,6 @@ rustflags = [
     "location-detail=none",
     "-Z",
     "fmt-debug=none",
+    "-C",
+    "panic=immediate-abort"
 ]
