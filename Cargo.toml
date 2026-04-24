@@ -1,24 +1,10 @@
+cargo-features = ["panic-immediate-abort"]
+
 [workspace]
-members = ["rust", "rust-no-core"]
 resolver = "3"
-
-[profile.dev]
-debug = false
-overflow-checks = false
-panic = "abort"
-debug-assertions = false
-
-[profile.release]
-overflow-checks = false
-panic = "abort"
+members = ["rust", "rust-no-core"]
 
 [workspace.lints.clippy]
-dbg_macro = "deny"
-todo = "deny"
-single_range_in_vec_init = "warn"
-redundant_clone = "warn"
-declare_interior_mutable_const = "deny"
-style = { level = "warn", priority = -1 }
 assertions_on_constants = "warn"
 assign_op_pattern = "warn"
 blocks_in_conditions = "warn"
@@ -35,6 +21,8 @@ collapsible_else_if = "warn"
 collapsible_if = "warn"
 collapsible_match = "warn"
 comparison_to_empty = "warn"
+dbg_macro = "deny"
+declare_interior_mutable_const = "deny"
 default_instead_of_iter_empty = "warn"
 disallowed_macros = "warn"
 disallowed_methods = "warn"
@@ -44,6 +32,7 @@ doc_lazy_continuation = "warn"
 doc_overindented_list_items = "warn"
 double_must_use = "warn"
 duplicate_underscore_argument = "warn"
+enum_variant_names = "warn"
 err_expect = "warn"
 excessive_precision = "warn"
 field_reassign_with_default = "warn"
@@ -71,10 +60,12 @@ iter_nth = "warn"
 iter_nth_zero = "warn"
 iter_skip_next = "warn"
 just_underscores_and_digits = "warn"
+large_enum_variant = "warn"
 legacy_numeric_constants = "warn"
 len_without_is_empty = "warn"
 len_zero = "warn"
 let_and_return = "warn"
+let_underscore_future = "warn"
 let_unit_value = "warn"
 main_recursion = "warn"
 manual_bits = "warn"
@@ -99,9 +90,9 @@ match_like_matches_macro = "warn"
 match_overlapping_arm = "warn"
 match_ref_pats = "warn"
 match_result_ok = "warn"
-mem_replace_with_default = "warn"
 mem_replace_option_with_none = "warn"
 mem_replace_option_with_some = "warn"
+mem_replace_with_default = "warn"
 missing_enforced_import_renames = "warn"
 missing_safety_doc = "warn"
 mixed_attributes_style = "warn"
@@ -120,6 +111,8 @@ needless_range_loop = "warn"
 needless_return = "warn"
 needless_return_with_question_mark = "warn"
 neg_multiply = "warn"
+new_ret_no_self = "warn"
+new_without_default = "warn"
 non_minimal_cfg = "warn"
 obfuscated_if_else = "warn"
 ok_expect = "warn"
@@ -133,6 +126,7 @@ println_empty_string = "warn"
 ptr_arg = "warn"
 ptr_eq = "warn"
 question_mark = "warn"
+redundant_clone = "warn"
 redundant_closure = "warn"
 redundant_field_names = "warn"
 redundant_pattern = "warn"
@@ -146,12 +140,17 @@ should_implement_trait = "warn"
 single_char_add_str = "warn"
 single_component_path_imports = "warn"
 single_match = "warn"
+single_range_in_vec_init = "warn"
 string_extend_chars = "warn"
+style = { level = "warn", priority = -1 }
 tabs_in_doc_comments = "warn"
 to_digit_is_some = "warn"
 to_string_trait_impl = "warn"
+todo = "deny"
+too_many_arguments = "warn"
 toplevel_ref_arg = "warn"
 trim_split_whitespace = "warn"
+type_complexity = "warn"
 unnecessary_fallible_conversions = "warn"
 unnecessary_fold = "warn"
 unnecessary_lazy_evaluations = "warn"
@@ -171,10 +170,15 @@ write_with_newline = "warn"
 writeln_empty_string = "warn"
 wrong_self_convention = "warn"
 zero_ptr = "warn"
-type_complexity = "warn"
-new_ret_no_self = "warn"
-let_underscore_future = "warn"
-new_without_default = "warn"
-too_many_arguments = "warn"
-large_enum_variant = "warn"
-enum_variant_names = "warn"
+
+[profile.dev]
+debug = false
+debug-assertions = false
+overflow-checks = false
+panic = "immediate-abort"
+codegen-units = 1
+
+[profile.release]
+overflow-checks = false
+panic = "immediate-abort"
+codegen-units = 1

@@ -6,12 +6,8 @@ build-std-features = ["optimize_for_size"]
 rustflags = [
     "-Z",
     "unstable-options",
-    "-C",
-    "codegen-units=1",
     "-Z",
     "location-detail=none",
     "-Z",
     "fmt-debug=none",
-    "-C",
-    "panic=immediate-abort"
 ]
