@@ -41,20 +41,20 @@ These tables are taken from CI output
 Ubuntu (x86_64)
 
 ```
-1/4 billion_loops:Bench C                 OK              0.56s
-2/4 billion_loops:Bench C++               OK              0.53s
-3/4 billion_loops:Bench Rust              OK              0.94s
-4/4 billion_loops:Bench Rust with no_core OK              0.45s
+1/4 billion_loops:Bench C                 OK              2.25s
+2/4 billion_loops:Bench C++               OK              2.26s
+3/4 billion_loops:Bench Rust              OK              2.30s
+4/4 billion_loops:Bench Rust with no_core OK              1.28s
 
 # speedometer.py
-real	0m38.543s
-user	0m38.533s
-sys	0m0.007s
+real	0m30.785s
+user	0m30.782s
+sys	0m0.001s
 
 # numbed.py
-real	0m0.560s
-user	0m0.765s
-sys	0m0.060s
+real	0m0.512s
+user	0m0.709s
+sys	0m0.037s
 ```
 
 Ubuntu (aarch64)
@@ -66,71 +66,71 @@ Ubuntu (aarch64)
 4/4 billion_loops:Bench Rust with no_core OK              1.77s
 
 # speedometer.py
-real	0m32.853s
-user	0m32.847s
-sys	0m0.003s
+real	0m31.740s
+user	0m31.738s
+sys	0m0.002s
 
 # numbed.py
-real	0m0.424s
-user	0m0.574s
-sys	0m0.051s
+real	0m0.405s
+user	0m0.557s
+sys	0m0.048s
 ```
 
 MacOS (x86_64)
 
 ```
-1/4 billion_loops:Bench C                 OK              1.85s
-2/4 billion_loops:Bench C++               OK              1.72s
-3/4 billion_loops:Bench Rust              OK              1.72s
-4/4 billion_loops:Bench Rust with no_core OK              1.69s
+1/4 billion_loops:Bench C                 OK              1.46s
+2/4 billion_loops:Bench C++               OK              1.50s
+3/4 billion_loops:Bench Rust              OK              1.46s
+4/4 billion_loops:Bench Rust with no_core OK              1.44s
 
 # speedometer.py
-real	0m50.419s
-user	0m50.116s
-sys	0m0.180s
+real	1m46.605s
+user	1m45.919s
+sys	0m0.306s
 
 # numbed.py
-real	0m0.688s
-user	0m0.788s
-sys	0m0.109s
+real	0m0.746s
+user	0m0.628s
+sys	0m0.102s
 ```
 
 MacOS (aarch64)
 
 ```
-1/4 billion_loops:Bench C                 OK              0.78s
-2/4 billion_loops:Bench C++               OK              0.85s
-3/4 billion_loops:Bench Rust              OK              0.82s
-4/4 billion_loops:Bench Rust with no_core OK              0.42s
+1/4 billion_loops:Bench C                 OK              0.67s
+2/4 billion_loops:Bench C++               OK              0.68s
+3/4 billion_loops:Bench Rust              OK              0.66s
+4/4 billion_loops:Bench Rust with no_core OK              0.35s
 
 # speedometer.py
-real	0m26.407s
-user	0m25.896s
-sys	0m0.183s
+real	0m18.718s
+user	0m18.499s
+sys	0m0.049s
 
 # numbed.py
-real	0m1.719s
-user	0m0.552s
-sys	0m0.239s
+real	0m0.629s
+user	0m0.287s
+sys	0m0.088s
 ```
 
 Windows-gnu
 
 ```
-1/4 billion_loops:Bench C                 OK              0.59s
+1/4 billion_loops:Bench C                 OK              0.58s
 2/4 billion_loops:Bench C++               OK              0.58s
 3/4 billion_loops:Bench Rust              OK              0.64s
-4/4 billion_loops:Bench Rust with no_core OK              0.66s
+4/4 billion_loops:Bench Rust with no_core OK              0.64s
 
 # speedometer.py
-real	0m58.413s
+real	0m25.345s
 user	0m0.031s
-sys	0m0.000s
+sys	0m0.015s
 
 # numbed.py
-real	0m0.776s
+real	0m0.641s
 user	0m0.000s
-sys	0m0.000s
+sys	0m0.015s
 ```
 
 Windows-gnullvm (x86_64)
@@ -139,91 +139,92 @@ Windows-gnullvm (x86_64)
 1/4 billion_loops:Bench C                 OK              0.51s
 2/4 billion_loops:Bench C++               OK              0.51s
 3/4 billion_loops:Bench Rust              OK              0.96s
-4/4 billion_loops:Bench Rust with no_core OK              0.47s
+4/4 billion_loops:Bench Rust with no_core OK              0.46s
 
 # speedometer.py
-real	0m20.623s
-user	0m0.015s
+real	0m22.047s
+user	0m0.000s
 sys	0m0.000s
 
 # numbed.py
-real	0m0.683s
-user	0m0.015s
+real	0m0.664s
+user	0m0.000s
 sys	0m0.000s
 ```
 
 Windows-gnullvm (aarch64)
 
 ```
-1/4 billion_loops:Bench C                 OK              1.81s
-2/4 billion_loops:Bench C++               OK              1.82s
-3/4 billion_loops:Bench Rust              OK              1.80s
-4/4 billion_loops:Bench Rust with no_core OK              1.80s
+1/4 billion_loops:Bench C                 OK              1.80s
+2/4 billion_loops:Bench C++               OK              1.87s
+3/4 billion_loops:Bench Rust              OK              1.79s
+4/4 billion_loops:Bench Rust with no_core OK              1.79s
 
 # speedometer.py
-real	0m22.762s
-user	0m0.016s
-sys	0m0.015s
+real	0m22.938s
+user	0m0.015s
+sys	0m0.000s
 
 # numbed.py
-real	0m0.794s
-user	0m0.015s
-sys	0m0.015s
+real	0m0.718s
+user	0m0.031s
+sys	0m0.000s
 ```
 
 Windows-msvc (x86_64)
 
 ```
-1/4 billion_loops:Bench C                 OK              0.36s
-2/4 billion_loops:Bench C++               OK              0.34s
-3/4 billion_loops:Bench Rust              OK              0.65s
+1/4 billion_loops:Bench C                 OK              0.33s
+2/4 billion_loops:Bench C++               OK              0.35s
+3/4 billion_loops:Bench Rust              OK              0.66s
 4/4 billion_loops:Bench Rust with no_core OK              0.64s
 
 # speedometer.py
+7
 Days              : 0
 Hours             : 0
 Minutes           : 0
-Seconds           : 34
-Milliseconds      : 515
-Ticks             : 345153309
-TotalDays         : 0.000399482996527778
-TotalHours        : 0.00958759191666667
-TotalMinutes      : 0.575255515
-TotalSeconds      : 34.5153309
-TotalMilliseconds : 34515.3309
+Seconds           : 35
+Milliseconds      : 535
+Ticks             : 355354164
+TotalDays         : 0.000411289541666667
+TotalHours        : 0.009870949
+TotalMinutes      : 0.59225694
+TotalSeconds      : 35.5354164
+TotalMilliseconds : 35535.4164
 
 # numbed.py
 Days              : 0
 Hours             : 0
 Minutes           : 0
 Seconds           : 0
-Milliseconds      : 669
-Ticks             : 6690935
-TotalDays         : 7.74413773148148E-06
-TotalHours        : 0.000185859305555556
-TotalMinutes      : 0.0111515583333333
-TotalSeconds      : 0.6690935
-TotalMilliseconds : 669.0935
+Milliseconds      : 671
+Ticks             : 6718508
+TotalDays         : 7.77605092592593E-06
+TotalHours        : 0.000186625222222222
+TotalMinutes      : 0.0111975133333333
+TotalSeconds      : 0.6718508
+TotalMilliseconds : 671.8508
 ```
 
 Windows-msvc (aarch64)
 
 ```
-1/4 billion_loops:Bench C                 OK              1.81s
-2/4 billion_loops:Bench C++               OK              1.80s
-3/4 billion_loops:Bench Rust              OK              1.80s
-4/4 billion_loops:Bench Rust with no_core OK              1.80s
+1/4 billion_loops:Bench C                 OK              1.79s
+2/4 billion_loops:Bench C++               OK              1.79s
+3/4 billion_loops:Bench Rust              OK              1.79s
+4/4 billion_loops:Bench Rust with no_core OK              1.79s
 
 # speedometer.py
 Days              : 0
 Hours             : 0
 Minutes           : 0
 Seconds           : 30
-Milliseconds      : 489
-Ticks             : 304892764
-TotalDays         : 0.000352885143518519
-TotalHours        : 0.00846924344444444
-TotalMinutes      : 0.508154606666667
-TotalSeconds      : 30.4892764
-TotalMilliseconds : 30489.2764
+Milliseconds      : 436
+Ticks             : 304365149
+TotalDays         : 0.000352274478009259
+TotalHours        : 0.00845458747222222
+TotalMinutes      : 0.507275248333333
+TotalSeconds      : 30.4365149
+TotalMilliseconds : 30436.5149
 ```
