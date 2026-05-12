@@ -116,9 +116,9 @@ jobs:
             python-numba
       - name: run bench
         shell: msys2 {0}
+        env:
+          RUSTUP_TOOLCHAIN: nightly-x86_64-pc-windows-gnu
         run: |
-          rustup default nightly-x86_64-pc-windows-gnu
-          rustup set default-host x86_64-pc-windows-gnu
           meson setup build
           meson compile -C build
           meson test --benchmark -C build
@@ -142,9 +142,9 @@ jobs:
             python-numba
       - name: run bench
         shell: msys2 {0}
+        env:
+          RUSTUP_TOOLCHAIN: nightly-x86_64-pc-windows-gnullvm
         run: |
-          rustup default nightly-x86_64-pc-windows-gnullvm
-          rustup set default-host x86_64-pc-windows-gnullvm
           meson setup build
           meson compile -C build
           meson test --benchmark -C build
@@ -187,9 +187,9 @@ jobs:
             python-numba
       - name: run bench
         shell: msys2 {0}
+        env:
+          RUSTUP_TOOLCHAIN: nightly-aarch64-pc-windows-gnullvm
         run: |
-          rustup default nightly-aarch64-pc-windows-gnullvm
-          rustup set default-host aarch64-pc-windows-gnullvm
           meson setup build
           meson compile -C build
           meson test --benchmark -C build
