@@ -65,9 +65,9 @@ jobs:
           python-version: "3.14"
       - name: download deps
         env:
-          CMAKE_PREFIX_PATH: "/usr/local/opt/llvm@20"
+          CMAKE_PREFIX_PATH: "/usr/local/opt/llvm"
         run: |
-          brew update && brew install meson llvm@20
+          brew update && brew install meson llvm
           pip install -q numba
       - name: run bench
         run: |
@@ -87,9 +87,9 @@ jobs:
           python-version: "3.14"
       - name: download deps
         env:
-          CMAKE_PREFIX_PATH: "/usr/local/opt/llvm@20"
+          CMAKE_PREFIX_PATH: "/usr/local/opt/llvm"
         run: |
-          brew update && brew install meson llvm@20
+          brew update && brew install meson llvm
           pip install -q numba
       - name: run bench
         run: |
