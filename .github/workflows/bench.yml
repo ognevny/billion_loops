@@ -14,7 +14,7 @@ env:
 jobs:
   x86_64-linux:
     name: Benchmark on x86_64 Linux (Ubuntu)
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
     steps:
@@ -24,8 +24,8 @@ jobs:
           python-version: "3.14"
       - name: download deps
         run: |
-          sudo apt-get -y -q install gcc llvm-16-dev
-          pip install meson ninja numba==0.62.1
+          sudo apt-get -y -q install gcc llvm-22-dev
+          pip install meson ninja numba
       - name: run bench
         run: |
           meson setup build
@@ -34,7 +34,7 @@ jobs:
           time python3 py/speedometer.py && time python3 py-numba/numbed.py
   aarch64-linux:
     name: Benchmark on AArch64 Linux (Ubuntu)
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     strategy:
       fail-fast: false
     steps:
@@ -44,8 +44,8 @@ jobs:
           python-version: "3.14"
       - name: download deps
         run: |
-          sudo apt-get -y -q install gcc llvm-16-dev
-          pip install meson ninja numba==0.62.1
+          sudo apt-get -y -q install gcc llvm-22-dev
+          pip install meson ninja numba
       - name: run bench
         run: |
           meson setup build
