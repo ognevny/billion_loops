@@ -274,7 +274,7 @@ jobs:
             time python py/speedometer.py
   x86_64-cross-musl:
     name: Benchmark on x86_64 Linux with Musl (cross compilation on Ubuntu)
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
     steps:
