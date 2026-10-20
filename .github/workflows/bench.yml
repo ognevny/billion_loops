@@ -243,6 +243,7 @@ jobs:
           copyback: false
           prepare: |
             pkg install -y meson python curl rustup-init
+            rustup-init --profile minimal -y
           run: |
             . "$HOME/.cargo/env"
             meson setup build
