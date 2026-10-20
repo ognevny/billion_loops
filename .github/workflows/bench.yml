@@ -53,28 +53,6 @@ jobs:
           meson test --benchmark -C build
           time python3 py/speedometer.py && time python3 py-numba/numbed.py
 
-  x86_64-macos:
-    name: Benchmark on x86_64 MacOS
-    runs-on: macos-26-intel
-    strategy:
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: "3.15"
-      - name: download deps
-        env:
-          CMAKE_PREFIX_PATH: "/usr/local/opt/llvm"
-        run: |
-          brew update && brew install meson llvm
-          pip install -q numba
-      - name: run bench
-        run: |
-          meson setup build
-          meson compile -C build
-          meson test --benchmark -C build
-          time python3 py/speedometer.py && time python3 py-numba/numbed.py
   aarch64-macos:
     name: Benchmark on AArch64 MacOS
     runs-on: macos-latest
