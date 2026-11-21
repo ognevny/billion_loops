@@ -43,7 +43,7 @@ impl Add for i32 {
     fn add(self, rhs: Self) -> Self::Output { self + rhs }
 }
 
-#[lang = "eq"]
+#[lang = "partial_eq"]
 pub trait PartialEq<Rhs: PointeeSized = Self>: PointeeSized {
     #[must_use]
     fn eq(&self, other: &Rhs) -> bool;
